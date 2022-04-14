@@ -1,0 +1,131 @@
+version: '3'
+
+services:
+  apc-acl:
+    build: ./apc-acl/
+    volumes:
+      - ../../apc-acl/web/build/libs:/usr/app
+    ports:
+      - 8401:8401
+      - 5005:5005
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    environment:
+      - spring.profiles.active=vn01,local,docker
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+
+  authorization-api:
+    build: ./authorization-api/
+    volumes:
+      - ../../authorization-api/web/build/libs:/usr/app
+    ports:
+      - 8402:8402
+      - 5006:5006
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - spring.profiles.active=local,docker
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+
+  pricing-gateway:
+    build: ./pricing-gateway/
+    volumes:
+      - ../../pricing-gateway/web/build/libs:/usr/app
+    ports:
+      - 4001:4001
+      - 5009:5009
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - spring.profiles.active=local,docker
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+
+  price-management:
+    build: ./price-management/
+    volumes:
+      - ../../price-management/web/build/libs:/usr/app
+    ports:
+      - 8081:8081
+      - 5008:5008
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    environment:
+      - spring.profiles.active=vn01,local,docker
+      - USER=${USER}
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+
+  priceiq:
+    build: ./priceiq/
+    volumes:
+      - ../../priceiq/web/build/libs:/usr/app
+    ports:
+      - 8080:8080
+      - 5010:5010
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - spring.profiles.active=local,docker
+
+  kafka-consumer:
+    build: ./kafka-consumer/
+    volumes:
+      - ../../kafka-acl/kafka-consumer/build/libs:/usr/app
+    ports:
+      - 8403:8080
+      - 5012:5010
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    environment:
+      # - spring.profiles.active=an01,catalog,docker,local_catalog
+      - spring.profiles.active=an01,docker,local
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+      - USER=${USER}
+
+  kafka-producer:
+    build: ./kafka-producer/
+    volumes:
+      - ../../kafka-acl/kafka-producer/build/libs:/usr/app
+    ports:
+      - 8404:8080
+      - 5013:5010
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - spring.profiles.active=an01,local,docker
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+      - BASIC_AUTH_USER_NAME=${BASIC_AUTH_USER_NAME}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+      - USER=${USER}
+
+  db:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: kraken
+      POSTGRES_PASSWORD: kraken
+    ports:
+      - 5432:5432

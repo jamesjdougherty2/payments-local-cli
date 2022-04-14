@@ -1,0 +1,20 @@
+{
+  "name": "payments-local-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "payments-local-cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node payments-local-cli.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "clear": "^0.1.0",
+    "exec-sh": "^0.3.2",
+    "figlet": "^1.2.3",
+    "inquirer": "^6.4.1",
+    "press-any-key": "^0.1.1"
+  }
+}
