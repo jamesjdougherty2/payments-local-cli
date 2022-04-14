@@ -1,6 +1,6 @@
 # payments-local-cli
 
-A collection of common commands used within the pricing team.
+A collection of common commands used within the payments team.
 
 ## Start
 

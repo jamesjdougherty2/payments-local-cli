@@ -8,10 +8,7 @@ const mainPrompt = [{
   name: "action",
   message: "Main Menu",
   choices: [
-    "Concourse",
     "Docker",
-    "Flyway",
-    "Kraken Vars",
     "Vault",
     "Quit"
   ],

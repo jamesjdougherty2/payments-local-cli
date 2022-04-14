@@ -9,21 +9,21 @@ module.exports = {
 
   tree: async () => {
     newline();
-    await tryShell("safe tree concourse/pricing");
+    await tryShell("safe tree concourse/payments");
   },
 
   getSecret: async (key) => {
     newline();
-    await tryShell(`safe get concourse/pricing/${key}`);
+    await tryShell(`safe get concourse/payments/${key}`);
   },
 
   setSecret: async (key) => {
     newline();
-    await tryShell(`safe set concourse/pricing/${key} value`);
+    await tryShell(`safe set concourse/payments/${key} value`);
   },
 
   deleteSecret: async (key) => {
     newline();
-    await tryShell(`safe delete concourse/pricing/${key}`);
+    await tryShell(`safe delete concourse/payments/${key}`);
   }
 };
