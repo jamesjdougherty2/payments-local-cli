@@ -7,7 +7,7 @@ exports.draw = () => {
 
   console.log(
     chalk.magentaBright(
-      figlet.textSync("Unleash the Kraken")
+      figlet.textSync("Unleash the DEVELOPER")
     )
   );
 };
